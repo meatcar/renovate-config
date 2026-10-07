@@ -1,0 +1,26 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:best-practices", ":preserveSemverRanges", "schedule:weekly"],
+  "vulnerabilityAlerts": {
+    "enabled": true
+  },
+  "osvVulnerabilityAlerts": true,
+  "minimumReleaseAge": "7 days",
+  "nix": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "matchPackageNames": ["meatcar/**"],
+      "schedule": ["* * * * *"]
+    },
+    {
+      // NOTE: the nix manager cannot rewrite the channel in flake.nix; bump channels by hand.
+      // see https://github.com/renovatebot/renovate/pull/45258
+      "matchManagers": ["nix"],
+      "matchPackageNames": ["https://github.com/NixOS/nixpkgs"],
+      "matchUpdateTypes": ["major", "minor"],
+      "enabled": false
+    }
+  ]
+}
